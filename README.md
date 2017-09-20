@@ -21,6 +21,9 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
     * [Accessing Pathname and Parameters in a Returned Component](#accessing-pathname-and-parameters-in-a-returned-component)
   * [`Link` Component](#link-component)
   * [Programmatic Navigation](#programmatic-navigation)
+* [Code Examples](#code-examples)
+  * [Basic Routing](#basic-routing)
+  * [Mixing Routes with Fixed Components](#mixing-routes-with-fixed-components)
 * [License](#license)
 
 ## Installation
@@ -241,6 +244,110 @@ In use cases where Chronik's `navigate()` or the History Web API's `window.histo
 
 * Change the browser's URL with `window.history.pushState()` to the desired path
 * Dispatch an action to modify `state.chronik.pathname` in the Redux store
+
+## Code Examples
+
+### Basic routing
+
+A simple app with three pages: home ('/'), blog ('/blog') and about ('/about').
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Chronik, Route } from 'chronik';
+
+import store from './store';
+
+
+
+const Home = () => {
+  return(
+    <div>Home</div>
+  );
+};
+
+const Blog = () => {
+  return(
+    <div>Blog</div>
+  );
+};
+
+const About = () => {
+  return(
+    <div>About</div>
+  );
+};
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Chronik>
+      <Route path="/" component={<Home />} />
+      <Route path="/blog" component={<Blog />} />
+      <Route path="/about" component={<About />} />
+    </Chronik>
+  </Provider>,
+  document.getElementById('root')
+);
+```
+
+### Mixing Routes with Fixed Components
+
+This is an extension of the basic example above, with fixed elements (header and footer) that is rendered on all three pages mixed in.
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Chronik, Route } from 'chronik';
+
+import store from './store';
+
+
+
+const Header = () => {
+  return(
+    <div>Header</div>
+  );
+};
+
+const Footer = () => {
+  return(
+    <div>Footer</div>
+  );
+};
+
+const Home = () => {
+  return(
+    <div>Home</div>
+  );
+};
+
+const Blog = () => {
+  return(
+    <div>Blog</div>
+  );
+};
+
+const About = () => {
+  return(
+    <div>About</div>
+  );
+};
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Chronik>
+      <Header />
+      <Route path="/" component={<Home />} />
+      <Route path="/blog" component={<Blog />} />
+      <Route path="/about" component={<About />} />
+      <Footer />
+    </Chronik>
+  </Provider>,
+  document.getElementById('root')
+);
+```
 
 ## License
 
