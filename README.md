@@ -1,4 +1,6 @@
-# Chronik 1.0.0
+# Chronik
+
+[![npm](https://img.shields.io/npm/v/chronik.svg)](https://www.npmjs.com/package/chronik)
 
 >  A simple, no-Context React-Redux client-side router based on the History Web API.
 
@@ -19,13 +21,13 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
     * [Accessing Pathname and Parameters in a Returned Component](#accessing-pathname-and-parameters-in-a-returned-component)
   * [`Link` Component](#link-component)
   * [Programmatic Navigation](#programmatic-navigation)
-
+* [License](#license)
 
 ## Installation
 
 ### NPM Package
 
-Chronik is available as a NPM package:
+Chronik is available as an [NPM package](https://www.npmjs.com/package/chronik):
 
 ```sh
 npm install --save chronik
@@ -197,13 +199,13 @@ Creating a hyperlink with the `Link` component is effectively the same as using 
 
 A `navigate(path)` action creator is available from the Chronik package for programmatic navigation:
 
-```
+```jsx
 import { navigate } from 'chronik';
 ```
 
 Example usage:
 
-```
+```jsx
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -239,3 +241,7 @@ In use cases where Chronik's `navigate()` or the History Web API's `window.histo
 
 * Change the browser's URL with `window.history.pushState()` to the desired path
 * Dispatch an action to modify `state.chronik.pathname` in the Redux store
+
+## License
+
+MIT

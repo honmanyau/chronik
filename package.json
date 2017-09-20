@@ -1,6 +1,6 @@
 {
   "name": "chronik",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "devDependencies": {
     "autoprefixer": "7.1.2",
@@ -94,5 +94,25 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "description": "A simple, no-Context React-Redux client-side router based on the History Web API.",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honmanyau/chronik.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "router",
+    "history"
+  ],
+  "author": "Honman Yau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/honmanyau/chronik/issues"
+  },
+  "homepage": "https://github.com/honmanyau/chronik#readme"
 }
