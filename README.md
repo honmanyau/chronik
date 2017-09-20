@@ -19,6 +19,7 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
     * [Basic Paths](#basic-paths)
     * [Paths with Parameters](#paths-with-parameters)
     * [Accessing Pathname and Parameters in a Returned Component](#accessing-pathname-and-parameters-in-a-returned-component)
+    * [Excluding a Path](#excluding-a-path)
   * [`Link` Component](#link-component)
   * [Programmatic Navigation](#programmatic-navigation)
 * [Code Examples](#code-examples)
@@ -177,6 +178,15 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+```
+
+#### Excluding a Path
+
+The `Route` component accepts an optional `not` prop as a boolean, which causes the `Route` component to match everything **but** the path specified.
+
+```jsx
+<Route not path="/" component={<ReturnHomeButton />} />
 
 ```
 
