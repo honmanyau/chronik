@@ -1,6 +1,6 @@
 # Chronik
 
-[![npm](https://img.shields.io/npm/v/chronik.svg)](https://www.npmjs.com/package/chronik)
+[![npm package](https://img.shields.io/npm/v/chronik.svg)](https://www.npmjs.org/package/chronik)
 
 >  A simple, no-Context React-Redux client-side router based on the History Web API.
 
@@ -244,4 +244,4 @@ In use cases where Chronik's `navigate()` or the History Web API's `window.histo
 
 ## License
 
-MIT
+[MIT](https://github.com/honmanyau/chronik/blob/master/LICENSE)
