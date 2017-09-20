@@ -6,23 +6,30 @@ import { connect } from 'react-redux';
 
 class Route extends React.Component {
   static propTypes = {
+    not: PropTypes.bool,
     path: PropTypes.string.isRequired,
     component: PropTypes.element.isRequired,
     chronik: PropTypes.object.isRequired,
   };
 
+  static defaultProps = {
+    not: false
+  };
+
+  removeTrailingSlash = (path) => {
+    return path.length > 1 ? path.replace(/\/$/, '') : path;
+  }
+
   render() {
-    const {path, component, chronik} = this.props;
+    const {not, path, component, chronik} = this.props;
     const isDOMElement = typeof component.type === 'function';
     const routed = {pathname: null, params: {}};
     let matched = false;
 
     // chroink.pathname is initially null as specified in ./reducers
     if (chronik.pathname && component) {
-      // Remove trailing '/'
-      const cPath = chronik.pathname;
-      const referencePath = path.length > 1 ? path.replace(/\/$/, '') : path;
-      const requestedPath = cPath.length > 1 ? cPath.replace(/\/$/, '') : cPath;
+      const referencePath = this.removeTrailingSlash(path);
+      const requestedPath = this.removeTrailingSlash(chronik.pathname);
 
       // Handle paths with no variable parameters
       if (referencePath.indexOf('/:') < 0) {
@@ -51,7 +58,7 @@ class Route extends React.Component {
       }
     }
 
-    if (matched) {
+    if (!not && matched || not && !matched) {
       return (
         <component.type
           {...Object.assign({}, {...component.props}, isDOMElement ? {routed} : {})}
