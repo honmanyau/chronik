@@ -106,13 +106,13 @@ import { Route, Link, navigate } from 'chronik';
 // ...
 
 // Match '/blog'
-<Route path="/home" component={<Dummy />} />
+<Route path="/blog" component={<Blog />} />
 
 // Match anything that begins with '/blog/'
-<Route path="/home/*" component={<Dummy />} />
+<Route path="/blog/*" component={<BlogNavigation />} />
 
 // Match anything that is not '/blog'
-<Route not path="/home" component={<Dummy />} />
+<Route not path="/blog" component={<Link href="/blog">Blog</Link>} />
 
 // Create a Link within the app (use <a> for external links)
 <Link href="/">Home</Link>
@@ -163,9 +163,9 @@ Return `<Meowtwo />` if the current path (`window.location.pathname`) is **exact
 
 #### Accessing Pathname and Parameters in a Returned Component
 
-If the `Route` component returns a component that is not a simple DOM element, the string initially assigned to the `path` prop of the `Route` component and any parameters (if used) are passed into the returned component as a prop called `routed`.  Parameters specified in `path` must be unique.
+If the `Route` component returns a component that is not a simple DOM element, the string initially assigned to the `path` prop of the `Route` component and any parameters (if used) are passed into the returned component as a prop called `routed`.  Parameters specified in `path` **must be unique**.
 
-The `routed` prop is an object, in JSON format, structured as follows for a component that is returned by `<Route path="/nummern/:eins/:zwei/:drei" component={<Meowdrei />} />` when visiting `'/nummern/1/2/3'`:
+The `routed` prop is an object structured as shown in the example below for a component that is returned by `<Route path="/nummern/:eins/:zwei/:drei" component={<Meowdrei />} />` when visiting `'/nummern/1/2/3'`:
 
 ```
 // the routed prop inside <Meowdrei />
