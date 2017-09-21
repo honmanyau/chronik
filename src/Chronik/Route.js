@@ -20,6 +20,10 @@ class Route extends React.Component {
     return path.length > 1 ? path.replace(/\/$/, '') : path;
   }
 
+  returnLeadingPath = (path) => {
+    return path.endsWith('*') ? path.replace(/\/\*$/, '/') : null;
+  }
+
   render() {
     const {not, path, component, chronik} = this.props;
     const isDOMElement = typeof component.type === 'function';
@@ -30,30 +34,47 @@ class Route extends React.Component {
     if (chronik.pathname && component) {
       const referencePath = this.removeTrailingSlash(path);
       const requestedPath = this.removeTrailingSlash(chronik.pathname);
+      const leadingReferencePath = this.returnLeadingPath(referencePath);
+      const matchSuccess = () => {
+        routed.pathname = requestedPath;
+        matched = true;
+      }
 
       // Handle paths with no variable parameters
       if (referencePath.indexOf('/:') < 0) {
         if (requestedPath === referencePath) {
-          routed.pathname = requestedPath;
-          matched = true;
+          matchSuccess();
+        }
+        else if (requestedPath.length > 1 && requestedPath.startsWith(leadingReferencePath)) {
+          matchSuccess();
         }
       }
       // Handle paths with variable parameters
       else if (referencePath.indexOf('/:') >= 0) {
-        const referencePathArray = referencePath.split('/');
-        const requestedPathArray = requestedPath.split('/');
-        const mismatch = referencePathArray.slice(1, referencePathArray.length).filter((item, index) => {
-          if (item[0] === ':') {
-            routed.params[item.slice(1, item.length)] = requestedPathArray[index + 1];
+        const referencePathArray = referencePath.split('/').slice(1);
+        const requestedPathArray = requestedPath.split('/').slice(1);
+
+        const mismatch = referencePathArray.filter((item, index) => {
+          if (item === '*' && index === referencePathArray.length - 1) {
             return false;
           }
 
-          return item[0] !== ':' && item !== requestedPathArray[index + 1];
+          if (item[0] === ':') {
+            // Store the value of the parameter in routed
+            routed.params[item.slice(1, item.length)] = requestedPathArray[index];
+            return false;
+          }
+
+          return item[0] !== ':' && item !== requestedPathArray[index];
         });
 
-        if (mismatch.length === 0 && referencePathArray.length === requestedPathArray.length) {
-          routed.pathname = requestedPath;
-          matched = true;
+        if (mismatch.length === 0 && requestedPathArray[0] !== "") {
+          if (referencePathArray.length === requestedPathArray.length) {
+            matchSuccess();
+          }
+          else if (referencePathArray[referencePathArray.length - 1] === '*' && referencePathArray.length <= requestedPathArray.length) {
+            matchSuccess();
+          }
         }
       }
     }
