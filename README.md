@@ -14,7 +14,7 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
   * [NPM Package](#npm-package)
   * [Connect Chronik to the Redux Store](#connect-chronik-to-the-redux-store)
   * [Initialise Chronik as a Component](#initialise-chronik-as-a-component)
-* [Quick Start](#quick-start)  
+* [Quickstart](#quickstart)  
 * [Usage](#usage)
   * [`Route` Component](#route-component)
     * [Basic Paths](#basic-paths)
@@ -98,7 +98,7 @@ ReactDOM.render(
 );
 ```
 
-## Quick Start
+## Quickstart
 
 ```jsx
 import { Route, Link, navigate } from 'chronik';
