@@ -431,7 +431,7 @@ ReactDOM.render(
 
 ## Changelog
 
-Chronik uses (semantic versioning)[http://semver.org/].
+Chronik uses [semantic versioning](http://semver.org/).
 
 * **1.0.0**—Released Chronik!
 * **1.0.1**—Added code examples to README.md.  Added license.
