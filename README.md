@@ -23,6 +23,7 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
     * [Match the Beginning of a Path](#match-the-beginning-of-a-path)
     * [Excluding a Path](#excluding-a-path)
   * [`Link` Component](#link-component)
+  * [`NoMatch` Component](#nomatch-component)
   * [Programmatic Navigation](#programmatic-navigation)
 * [Code Examples](#code-examples)
   * [Basic Routing](#basic-routing)
@@ -251,6 +252,32 @@ Creating a hyperlink with the `Link` component is effectively the same as using 
 <Link href="/cat">Cat</Link>
 ```
 
+### `NoMatch` Component
+
+**This is currently an experimental component**.
+
+The `NoMatch` component can be used to either redirect a user or render a component when a path requested cannot be matched to any `Route` component inside the scope of `ReactDOM.render()`.
+
+It should be noted that the `NoMatch` component takes into account of all `Route` components that can potentially be rendered.  For this reason, currently only one `NoMatch` component per-app is recommended and it should be placed as high as possible in the component tree.
+
+Being using the `NoMatch` component by importing it:
+
+```jsx
+import { NoMatch } from 'chronik';
+```
+
+#### Redirect if No-match
+
+```jsx
+<NoMatch redirect='/404' />
+```
+
+#### Return Component if No-match
+
+```jsx
+<NoMatch component={<NotFound />} />
+```
+
 ### Programmatic Navigation
 
 A `navigate(path)` action creator is available from the Chronik package for programmatic navigation:
@@ -410,6 +437,7 @@ Chronik uses (semantic versioning)[http://semver.org/].
 * **1.0.1**—Added code examples to README.md.  Added license.
 * **1.1.0**—Optional `not` prop is now available to the `Route` component; which causes a `Route` element to match all **but** the `path` specified.
 * **1.2.0**—The `Route` component can now perform a "begins-with" match if the string specified for its `path` prop has a trailing asterisk.
+* **1.3.0**—Added `NoMatch` component.
 
 ## License
 
