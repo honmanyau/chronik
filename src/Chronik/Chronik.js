@@ -29,6 +29,7 @@ class Chronik extends React.Component {
   }
 
   setPathname = () => {
+    this.props.actions.reinitialiseAttemptedAndUnresolved();
     this.props.actions.setPathname(window.location.pathname);
   }
 

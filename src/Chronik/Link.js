@@ -19,7 +19,7 @@ class Link extends React.Component {
   }
 
   render() {
-    const {navigate, children, href, ...rest} = this.props;
+    const {navigate, children, href, routed, ...rest} = this.props;
 
     return (
       <a href={href} {...rest} onClick={this.handleClick}>{children}</a>

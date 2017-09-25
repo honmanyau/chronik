@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as ChronikActions from './actions';
 
 
 
@@ -16,6 +19,21 @@ class Route extends React.Component {
     not: false
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.chronik.pathname !== nextProps.chronik.pathname) {
+      const {addAttemptedPathname, addUnresolvedPathname} = this.props.actions;
+
+      addAttemptedPathname(nextProps.path);
+
+      if(this.matchPath(nextProps)) {
+        addUnresolvedPathname('');
+      }
+      else {
+        addUnresolvedPathname(nextProps.path);
+      }
+    }
+  }
+
   removeTrailingSlash = (path) => {
     return path.length > 1 ? path.replace(/\/$/, '') : path;
   }
@@ -24,10 +42,12 @@ class Route extends React.Component {
     return path.endsWith('*') ? path.replace(/\/\*$/, '/') : null;
   }
 
-  render() {
-    const {not, path, component, chronik} = this.props;
-    const isDOMElement = typeof component.type === 'function';
-    const routed = {pathname: null, params: {}};
+  matchPath = (props) => {
+    const {not, path, component, chronik} = props;
+
+    this.returnComponent = false;
+    this.routed = {pathname: null, params: {}};
+
     let matched = false;
 
     // chroink.pathname is initially null as specified in ./reducers
@@ -36,7 +56,7 @@ class Route extends React.Component {
       const requestedPath = this.removeTrailingSlash(chronik.pathname);
       const leadingReferencePath = this.returnLeadingPath(referencePath);
       const matchSuccess = () => {
-        routed.pathname = requestedPath;
+        this.routed.pathname = requestedPath;
         matched = true;
       }
 
@@ -61,7 +81,7 @@ class Route extends React.Component {
 
           if (item[0] === ':') {
             // Store the value of the parameter in routed
-            routed.params[item.slice(1, item.length)] = requestedPathArray[index];
+            this.routed.params[item.slice(1, item.length)] = requestedPathArray[index];
             return false;
           }
 
@@ -79,10 +99,20 @@ class Route extends React.Component {
       }
     }
 
-    if (!not && matched || not && !matched) {
+    return this.returnComponent = (!not && matched) || (not && !matched);
+  }
+
+  render() {
+    this.matchPath(this.props);
+
+    const {returnComponent, routed} = this;
+    const {component} = this.props;
+    const isDOMElement = typeof component.type !== 'function';
+
+    if (returnComponent) {
       return (
         <component.type
-          {...Object.assign({}, {...component.props}, isDOMElement ? {routed} : {})}
+          {...Object.assign({}, {...component.props}, isDOMElement ? {} : {routed})}
         />
       );
     }
@@ -97,4 +127,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps, null)(Route);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(ChronikActions, dispatch)
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Route);
