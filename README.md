@@ -115,8 +115,14 @@ import { Route, Link, navigate } from 'chronik';
 // Match anything that is not '/blog'
 <Route not path="/blog" component={<Link href="/blog">Blog</Link>} />
 
-// Create a Link within the app (use <a> for external links)
+// Create a Link to a location within the app (use <a> for external links)
 <Link href="/">Home</Link>
+
+// Redirect user if no paths can be matched
+<NoMatch redirect='/404' />
+
+// Return component if no paths can be matched
+<NoMatch component='<NotFound />' />
 
 // Programmatic navigation (navigate is an action creator, the code below
 // assumes that it has been hooked up with react-redux's `connect()`)
@@ -437,7 +443,11 @@ Chronik uses [semantic versioning](http://semver.org/).
 * **1.0.1**—Added code examples to README.md.  Added license.
 * **1.1.0**—Optional `not` prop is now available to the `Route` component; which causes a `Route` element to match all **but** the `path` specified.
 * **1.2.0**—The `Route` component can now perform a "begins-with" match if the string specified for its `path` prop has a trailing asterisk.
+* **1.2.1**—README.md fixes.
 * **1.3.0**—Added `NoMatch` component.
+* **1.3.1**—README.md fixes.
+* **1.3.2**—Minor README.md edits: added `NoMatch` to the Quickstart guide, minor edits.
+
 
 ## License
 
