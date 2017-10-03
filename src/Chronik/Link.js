@@ -9,7 +9,7 @@ import { navigate } from './actions';
 class Link extends React.Component {
   static propTypes = {
     href: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired
+    children: PropTypes.node.isRequired
   };
 
   handleClick = (event) => {
