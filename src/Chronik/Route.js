@@ -48,7 +48,7 @@ class Route extends React.Component {
     this.returnComponent = false;
     this.routed = {pathname: null, params: {}};
 
-    let matched = false;
+    let matched = null;
 
     // chroink.pathname is initially null as specified in ./reducers
     if (chronik.pathname && component) {
@@ -97,9 +97,9 @@ class Route extends React.Component {
           }
         }
       }
-    }
 
-    return this.returnComponent = (!not && matched) || (not && !matched);
+      return this.returnComponent = (!not && matched) || (not && !matched);
+    }
   }
 
   render() {
@@ -108,7 +108,6 @@ class Route extends React.Component {
     const {returnComponent, routed} = this;
     const {component} = this.props;
     const isDOMElement = typeof component.type !== 'function';
-
     if (returnComponent) {
       return (
         <component.type
