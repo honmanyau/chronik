@@ -447,7 +447,7 @@ Chronik uses [semantic versioning](http://semver.org/).
 * **1.3.0**—Added `NoMatch` component.
 * **1.3.1**—README.md fixes.
 * **1.3.2**—Minor README.md edits: added `NoMatch` to the Quickstart guide, minor edits.
-
+* **1.3.3**—Fixed incorrectly scoped return statement in the `Route` component, which lead a component associated with a `not` route to be briefly rendered on page load.  Fixed `PropType` for `children` to accommodate non-string `children`.
 
 ## License
 
