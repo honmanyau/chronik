@@ -23,6 +23,7 @@ Bug reports and constructive feedbacks are welcomed and would be much appreciate
     * [Match the Beginning of a Path](#match-the-beginning-of-a-path)
     * [Excluding a Path](#excluding-a-path)
   * [`Link` Component](#link-component)
+  * [`Redirect` Component](#redirect-component)
   * [`NoMatch` Component](#nomatch-component)
   * [Programmatic Navigation](#programmatic-navigation)
 * [Code Examples](#code-examples)
@@ -102,7 +103,7 @@ ReactDOM.render(
 ## Quickstart
 
 ```jsx
-import { Route, Link, navigate } from 'chronik';
+import { Route, Link, Redirect, navigate } from 'chronik';
 
 // ...
 
@@ -115,8 +116,11 @@ import { Route, Link, navigate } from 'chronik';
 // Match anything that is not '/blog'
 <Route not path="/blog" component={<Link href="/blog">Blog</Link>} />
 
-// Create a Link to a location within the app (use <a> for external links)
+// Create a link to a location within the app (use <a> for external links)
 <Link href="/">Home</Link>
+
+// Redirect a user upon rendering
+<Redirect to="/" />
 
 // Redirect user if no paths can be matched
 <NoMatch redirect='/404' />
@@ -258,6 +262,20 @@ Creating a hyperlink with the `Link` component is effectively the same as using 
 <Link href="/cat">Cat</Link>
 ```
 
+### `Redirect` Component
+
+The `Redirect` component facilitates simple redirection in the render() method of a React component and is mainly intended for conditional rendering.
+
+To use the `Redirect` component, simply import it:
+
+```jsx
+import { Redirect } from 'chronik';
+```
+
+```jsx
+<Redirect to="/" />
+```
+
 ### `NoMatch` Component
 
 **This is currently an experimental component**.
@@ -298,7 +316,7 @@ Example usage:
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { navigate } from './node_modules';
+import { navigate } from 'chronik';
 
 
 
@@ -435,6 +453,43 @@ ReactDOM.render(
 );
 ```
 
+### Redirect User by Conditional Rendering
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { Redirect } from 'chronik';
+
+import store from './store';
+
+
+
+class SignIn extends React.Component {
+  render() {
+    const { authenticated } = this.props;
+
+    if (authenticated) {
+      return <Redirect to="/dashboard" />
+    }
+
+    return(
+      <form>
+        <!-- Sign in form -->
+      </form>
+    );
+  }
+
+  const mapStateToProps = (state) => {
+    return {
+      authenticated: state.authenticated
+    }
+  };
+
+  export default connect(mapStateToProps, null)(SignIn);
+}
+```
+
 ## Changelog
 
 Chronik uses [semantic versioning](http://semver.org/).
@@ -448,6 +503,7 @@ Chronik uses [semantic versioning](http://semver.org/).
 * **1.3.1**—README.md fixes.
 * **1.3.2**—Minor README.md edits: added `NoMatch` to the Quickstart guide, minor edits.
 * **1.3.3**—Fixed incorrectly scoped return statement in the `Route` component, which lead a component associated with a `not` route to be briefly rendered on page load.  Fixed `PropType` for `children` to accommodate non-string `children`.
+* **1.4.0**—Added `Redirect` component and the corresponding sections in README.md. Fixed incorrect code in README.md.
 
 ## License
 
