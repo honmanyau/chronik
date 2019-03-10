@@ -1,4 +1,4 @@
-**This project is no longer maintained and will eventually be achived. While it is extremely unlikely anyone will use this pet project in production, here is the warning: please DO NOT use it production!**
+**This project is no longer maintained and will eventually be achived. While it is extremely unlikely anyone will use this pet project in production, here is the warning: please DO NOT use it in production!**
 
 # Chronik
 
